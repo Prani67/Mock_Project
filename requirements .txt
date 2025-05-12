@@ -1,0 +1,12 @@
+Flask
+flask-cors
+pandas
+openpyxl
+requests
+sentence-transformers 
+numpy 
+scikit-learn
+
+
+
+

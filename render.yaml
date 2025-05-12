@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: pacematic-interview
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    envVars:
+      - key: MISTRAL_API_KEY
+        value: hFCQz64K0YuZD8qFPBZ4AS53jLjpRn4L 
+

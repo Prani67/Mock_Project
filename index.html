@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pacematic Mock Interview Platform</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #eef2f7;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .welcome-card {
+      border-radius: 15px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .card-header {
+      background-color: #007bff;
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .instruction-step {
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #007bff;
+    }
+    .instruction-step h6 {
+      color: #007bff;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .important-note {
+      background-color: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .btn-next {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 30px;
+      font-weight: bold;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0,123,255,0.2);
+      transition: all 0.3s ease;
+    }
+    .btn-next:hover {
+      background-color: #0069d9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,123,255,0.3);
+    }
+    .footer-text {
+      color: #6c757d;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .btn-space { margin-right: 10px; }
+    .score-box {
+      background-color: #e8f6ff;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .score-box span {
+      font-size: 24px;
+      color: #007bff;
+    }
+    .progress {
+      height: 20px;
+      background-color: #dcdde1;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    .progress-bar { background-color: #3498db; }
+    .recording-indicator {
+      font-weight: bold;
+      color: red;
+      margin-top: 10px;
+    }
+    .timer {
+      font-weight: bold;
+      color: #007bff;
+      margin-left: 15px;
+    }
+    #resultSummary .score-box { min-width: 150px; }
+    .question-summary {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 4px solid #007bff;
+    }
+    .question-summary h6 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .score-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-right: 5px;
+      font-size: 0.9em;
+      font-weight: bold;
+      color: white;
+    }
+    .score-high { background-color: #28a745; }
+    .score-medium { background-color: #ffc107; color: #212529; }
+    .score-low { background-color: #dc3545; }
+    .answer-review {
+      margin-top: 10px;
+      background-color: #f2f7ff;
+      padding: 10px;
+      border-radius: 5px;
+      border-left: 4px solid #007bff;
+    }
+    .loading-spinner {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      vertical-align: text-bottom;
+      border: 0.2em solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spinner-border .75s linear infinite;
+    }
+    @keyframes spinner-border {
+      to { transform: rotate(360deg); }
+    }
+    .loading-indicator {
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+    .pending-evaluation {
+      color: #6c757d;
+      font-style: italic;
+    }
+    .evaluation-status {
+      font-size: 12px;
+      margin-left: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .status-pending {
+      background-color: #f8f9fa;
+      color: #6c757d;
+    }
+    .status-completed {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .no-copy {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;  
+    }
+    
+    .anti-cheat-warning {
+      color: #dc3545;
+      font-weight: bold;
+      padding: 8px;
+      border-radius: 5px;
+      background-color: rgba(220, 53, 69, 0.1);
+      margin: 10px 0;
+      display: none;
+    }
+    
+    .integrity-alert {
+      background-color: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 0.9em;
+    }
+    
+    .monitoring-indicator {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.85em;
+    }
+    
+    .monitoring-active {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+    }
+    
+    .monitoring-warning {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+    
+    .cheat-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #dc3545;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Welcome Page -->
+  <div id="welcomePage" class="container">
+    <div class="logo-container">
+      <img src="pacematic_logo.svg" alt="Pacematic Corporate Training Centre" class="logo-full">
+    </div>
+    
+    <div class="card welcome-card">
+      <div class="card-header">
+        <i class="fas fa-handshake me-2"></i> Welcome to the Pacematic Mock Interview Platform
+      </div>
+      <div class="card-body">
+        <p class="lead">We're excited to help you prepare for your upcoming opportunities. This platform is designed to simulate a real interview experience in your chosen domain.</p>
+        
+        <div class="instruction-step">
+          <h6><i class="fas fa-user-tie me-2"></i> Step 1: Choose Your Domain</h6>
+          <p>Begin by selecting the domain in which you'd like to take your mock interview.</p>
+        </div>
+        
+        <div class="instruction-step">
+          <h6><i class="fas fa-microphone-alt me-2"></i> Step 2: Select Your Answer Mode</h6>
+          <p>Choose your preferred mode of answering questions—either <strong>text</strong> or <strong>voice</strong>.</p>
+          <ul>
+            <li>In <strong>text mode</strong>, simply type your answers in the provided text box and submit them.</li>
+            <li>In <strong>voice mode</strong>, click on the <strong>"Speak"</strong> button to start recording your answer, then click <strong>"Stop"</strong> once you're done.</li>
+          </ul>
+        </div>
+        
+        <div class="instruction-step">
+          <h6><i class="fas fa-clipboard-check me-2"></i> Step 3: Complete the Interview</h6>
+          <p>Answer each question thoughtfully. After submitting your response, the next question will appear automatically.</p>
+        </div>
+        
+        <div class="instruction-step">
+          <h6><i class="fas fa-chart-line me-2"></i> Step 4: Review Your Performance</h6>
+          <p>At the end of the interview, you will receive a detailed analysis of your performance, including feedback on areas where you can improve and a final score based on your responses.</p>
+        </div>
+        
+        <div class="important-note">
+          <h5><i class="fas fa-exclamation-triangle me-2"></i> Important Rules to Follow:</h5>
+          <ul>
+            <li>Do not copy and paste answers from other sources.</li>
+            <li>Avoid switching tabs or moving away from the interview screen, as such actions will be flagged as suspicious behavior and may be counted as cheating.</li>
+            <li>These actions will affect your final score and evaluation.</li>
+          </ul>
+        </div>
+        
+        <p>Once the interview is complete, you will be able to view a summary of your answers along with performance insights. If you wish to keep a record of your responses, you can download them by clicking on the <strong>"Download CSV File"</strong> button. Additionally, if you'd like to attempt another interview in a different domain, you can do so by clicking the <strong>"Next Interview"</strong> button.</p>
+        
+        <div class="text-center mt-4">
+          <button id="startInterviewBtn" class="btn btn-next">
+            <i class="fas fa-play-circle me-2"></i> Start Your Mock Interview
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <p class="footer-text">© 2025 Pacematic Corporate Training Centre | "Atleast 1 Member From A Family Should Have A Job"</p>
+  </div>
+
+  <!-- Interview Page -->
+  <div id="interviewPage" class="container d-none">
+    <header class="text-center">
+      <h1>Software Testing Mock Interview</h1>
+      <p class="text-muted">Practice your software testing interview skills with AI-powered feedback</p>
+    </header>
+
+    <div id="selectionSection">
+      <h5>⚙️ Configure Interview</h5>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <label for="domain">Domain</label>
+          <select id="domain" class="form-select">
+            <option value="Manual">Manual</option>
+            <option value="Automation">Automation</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="questionType">Type</label>
+          <select id="questionType" class="form-select">
+            <option value="Technical">Technical</option>
+            <option value="HR">HR</option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="questionCount">Number of Questions</label>
+        <div class="d-flex align-items-center">
+          <input type="number" id="questionCount" class="form-control" min="1" value="5" style="max-width: 100px;">
+          <span class="ms-2">of <span id="availableQuestionCount">0</span> available</span>
+        </div>
+        <small class="text-muted">Choose how many questions you want in your interview</small>
+      </div>
+      <button id="loadQuestionsBtn" class="btn btn-success mt-3">Start Interview</button>
+    </div>
+
+    <div id="questionSection" class="d-none">
+      <div class="progress">
+        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+      </div>
+      <p class="text-muted" id="progressText"></p>
+      
+      <!-- Monitoring indicator will be inserted here -->
+      <div id="monitoringIndicator" class="monitoring-indicator monitoring-active">
+        <i class="fas fa-shield-alt me-2"></i>
+        <small>✓ Screen monitoring active</small>
+      </div>
+      
+      <div id="focusTimeIndicator" class="small text-warning" style="display: none;">
+        Total time spent outside this window: 0m 0s
+      </div>
+      
+      <h5 id="questionText" class="no-copy">Question goes here</h5>
+      <div id="cheatWarning" class="anti-cheat-warning">
+        ⚠️ Cheating detected! This incident will be recorded.
+      </div>
+
+      <div class="mb-3">
+        <label>Choose input method:</label>
+        <div>
+          <button class="btn btn-outline-primary btn-sm btn-space" onclick="toggleInputMode('speak')">🎤 Speak</button>
+          <button class="btn btn-outline-secondary btn-sm" onclick="toggleInputMode('type')">⌨️ Type</button>
+        </div>
+      </div>
+
+      <textarea id="answerInput" class="form-control mb-3 d-none" rows="4" placeholder="Type your answer here..."></textarea>
+
+      <div id="speechControls" class="d-none">
+        <div class="mb-2">
+          <span id="recordingIndicator" class="recording-indicator d-none">🔴 Recording...</span>
+          <span class="timer" id="recordTimer">00:00</span>
+        </div>
+        <button class="btn btn-success btn-space" onclick="startSpeech()">Start</button>
+        <button class="btn btn-warning btn-space" onclick="pauseSpeech()">Pause</button>
+        <button class="btn btn-danger btn-space" onclick="stopSpeech()">Stop</button>
+        <button class="btn btn-info btn-space" onclick="playSpeech()">🔁 Listen</button>
+        <button class="btn btn-secondary btn-space" onclick="clearTranscript()">♻️ Rerecord</button>
+      </div>
+
+      <button id="submitAnswerBtn" class="btn btn-primary mt-2">Submit Answer</button>
+      <div class="loading-indicator" id="submissionIndicator">
+        <span class="loading-spinner"></span> Saving your answer...
+      </div>
+      
+      <div id="answersContainer" class="mt-4 d-none">
+        <!-- Previous answers will appear here -->
+      </div>
+    </div>
+
+    <div id="resultSummary" class="d-none mt-5">
+      <h4 class="text-center">🎯 Final Result Summary</h4>
+      
+      <div class="row g-3 justify-content-center">
+        <div class="col-md-3"><div class="score-box">Avg Accuracy<br><span id="avgAccuracy">0</span></div></div>
+        <div class="col-md-3"><div class="score-box">Avg Relevance<br><span id="avgRelevance">0</span></div></div>
+        <div class="col-md-3"><div class="score-box">Avg Depth<br><span id="avgDepth">0</span></div></div>
+        <div class="col-md-3"><div class="score-box">Avg Confidence<br><span id="avgConfidence">0</span></div></div>
+      </div>
+      
+      <div class="mt-4">
+        <h5>Question-by-Question Analysis <small class="text-muted">(Evaluations will appear as they complete)</small></h5>
+        <div id="questionAnalysis">
+          <!-- Question summaries will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <div class="mt-4 text-center">
+        <p class="lead"><strong>Status:</strong> <span id="finalStatus">Good</span></p>
+        <p><strong>Summary:</strong> <span id="finalMessage">Keep practicing for perfection!</span></p>
+        <button class="btn btn-outline-dark" onclick="exportCSV()">🧾 Export CSV</button>
+        <button class="btn btn-primary" onclick="startNewInterview()">Start New Interview</button>
+      </div>
+      
+      <!-- Integrity section will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    let questions = [], currentIndex = 0, sessionId = null;
+    let allAnswers = [], recognition, transcript = '', timer, seconds = 0;
+    let completedQuestionIds = [];
+    let userResponses = {};
+    let resultsCheckInterval = null;
+    let audioStorage = {}; // To store audio for later playback
+    let evaluationData = {}; // Store evaluation data as it comes in
+    let cheatIncidentCount = 0; // Track number of cheating incidents
+    let outOfFocusStartTime = null; // Track when user leaves the window
+    let totalOutOfFocusTime = 0; // Total time spent out of focus
+
+    // Handle navigation between pages
+    document.addEventListener('DOMContentLoaded', () => {
+      // Show welcome page on load
+      $('welcomePage').classList.remove('d-none');
+      $('interviewPage').classList.add('d-none');
+      
+      // Set up navigation button
+      $('startInterviewBtn').addEventListener('click', function() {
+        // Hide welcome page and show interview page
+        $('welcomePage').classList.add('d-none');
+        $('interviewPage').classList.remove('d-none');
+        
+        // Initialize the interview page
+        updateAvailableQuestions();
+      });
+    });
+
+    // Add this new function to dynamically update question count based on selection
+    async function updateAvailableQuestions() {
+      const domain = $('domain').value === 'Automation' ? 'Automation' : $('domain').value;
+      const questionType = $('questionType').value;
+      // Request all available questions for this domain/type combination
+      const res = await fetch('/api/questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          domain, 
+          questionType,
+          count: 1000 // Request a large number to get all available questions
+        })
+      });
+      const data = await res.json();
+      const availableCount = data.questions.length;
+      // Update the UI to show available count
+      $('availableQuestionCount').textContent = availableCount;
+      // Update the input max value
+      $('questionCount').max = availableCount;
+      // If user selected more than available, adjust
+      if (parseInt($('questionCount').value) > availableCount) {
+        $('questionCount').value = availableCount;
+      }
+    }
+
+    function toggleInputMode(mode) {
+      $('answerInput').classList.toggle('d-none', mode !== 'type');
+      $('speechControls').classList.toggle('d-none', mode !== 'speak');
+    }
+
+    function startTimer() {
+      seconds = 0;
+      $('recordTimer').textContent = '00:00';
+      timer = setInterval(() => {
+        seconds++;
+        const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const secs = String(seconds % 60).padStart(2, '0');
+        $('recordTimer').textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+    
+    // Anti-cheating function
+    function setupAntiCheating() {
+      // Make question text non-selectable
+      $('questionText').classList.add('no-copy');
+      
+      // Prevent copying from question text
+      $('questionText').addEventListener('copy', (e) => {
+        e.preventDefault();
+        showCheatWarning('copy');
+        return false;
+      });
+      
+      // Prevent pasting into answer input
+      $('answerInput').addEventListener('paste', (e) => {
+        e.preventDefault();
+        showCheatWarning('paste');
+        return false;
+      });
+      
+      // Disable right-click on the entire question section
+      $('questionSection').addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        showCheatWarning('right-click');
+        return false;
+      });
+      
+      // Disable keyboard shortcuts for copy/paste
+      document.addEventListener('keydown', (e) => {
+        // Check for Ctrl+C, Ctrl+V, Cmd+C, Cmd+V
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v')) {
+          const activeElement = document.activeElement;
+          const isInQuestionSection = $('questionSection').contains(activeElement);
+          const isQuestionText = activeElement === $('questionText');
+          
+          // If in question text or trying to paste into answer
+          if (isQuestionText || (isInQuestionSection && e.key === 'v')) {
+            e.preventDefault();
+            showCheatWarning(e.key === 'c' ? 'copy' : 'paste');
+            return false;
+          }
+        }
+      });
+    }
+
+    // Function to show warning when cheating is detected
+    function showCheatWarning(type) {
+      const warningDiv = $('cheatWarning');
+      cheatIncidentCount++;
+      
+      // Log the incident
+      logCheatIncident(type);
+      
+      // Show warning with animation
+      warningDiv.style.display = 'block';
+      warningDiv.style.animation = 'none';
+      warningDiv.offsetHeight; // Trigger reflow
+      warningDiv.style.animation = 'pulse 2s 1';
+      
+      // Hide after 3 seconds
+      setTimeout(() => {
+        warningDiv.style.display = 'none';
+      }, 3000);
+    }
+    
+    // Setup screen monitoring
+    function setupScreenMonitoring() {
+      // Track when user switches tabs or minimizes window
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      
+      // Track window blur/focus events
+      window.addEventListener('blur', () => handleFocusChange('blur'));
+      window.addEventListener('focus', () => handleFocusChange('focus'));
+    }
+
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        // Page is hidden (user switched tabs or minimized)
+        handleFocusChange('blur');
+      } else {
+        // Page is visible again
+        handleFocusChange('focus');
+      }
+    }
+
+    function handleFocusChange(eventType) {
+      if (!sessionId) return;
+      
+      const indicator = $('monitoringIndicator');
+      
+      if (eventType === 'blur') {
+        // User left the window
+        outOfFocusStartTime = new Date();
+        
+        // Update UI to show warning status
+        indicator.className = 'monitoring-indicator monitoring-warning';
+        indicator.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i><small>⚠️ Screen focus lost - this is being recorded</small>';
+        
+        // Log the event
+        fetch('/api/track-focus', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: sessionId,
+            eventType: 'blur',
+            timestamp: new Date().toISOString(),
+            questionIndex: currentIndex
+          })
+        }).catch(err => console.error('Failed to track focus:', err));
+        
+      } else if (eventType === 'focus' && outOfFocusStartTime) {
+        // User returned to window
+        const outOfFocusEndTime = new Date();
+        const timeSpentOut = (outOfFocusEndTime - outOfFocusStartTime) / 1000; // in seconds
+        totalOutOfFocusTime += timeSpentOut;
+        
+        // Update UI
+        indicator.className = 'monitoring-indicator monitoring-active';
+        indicator.innerHTML = '<i class="fas fa-shield-alt me-2"></i><small>✓ Screen monitoring active</small>';
+        
+        // Show time spent away
+        const minutes = Math.floor(totalOutOfFocusTime / 60);
+        const seconds = Math.floor(totalOutOfFocusTime % 60);
+        const timeSpentFormatted = `${minutes}m ${seconds}s`;
+        
+        $('focusTimeIndicator').style.display = 'block';
+        $('focusTimeIndicator').textContent = `Total time spent outside this window: ${timeSpentFormatted}`;
+        
+        // Log the focus event
+        fetch('/api/track-focus', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: sessionId,
+            eventType: 'focus',
+            timestamp: new Date().toISOString(),
+            questionIndex: currentIndex
+          })
+        }).catch(err => console.error('Failed to track focus:', err));
+        
+        outOfFocusStartTime = null;
+      }
+    }
+
+    // Log cheating incidents to server
+    function logCheatIncident(type) {
+      if (!sessionId) return;
+      
+      fetch('/api/track-incident', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: sessionId,
+          incidentType: type,
+          timestamp: new Date().toISOString(),
+          questionIndex: currentIndex
+        })
+      }).catch(err => console.error('Failed to log incident:', err));
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+    }
+
+    function startSpeech() {
+      $('answerInput').value = transcript;
+      $('recordingIndicator').classList.remove('d-none');
+      startTimer();
+      
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = true;
+      recognition.continuous = true;
+      
+      recognition.onresult = e => {
+        // Accumulate transcript from all results
+        let currentTranscript = '';
+        for (let i = 0; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            currentTranscript += e.results[i][0].transcript + ' ';
+          }
+        }
+        
+        // Update the transcript and text area
+        transcript = currentTranscript;
+        $('answerInput').value = transcript;
+      };
+      
+      recognition.onerror = e => {
+        console.error('Speech recognition error:', e.error);
+        // If an error occurs, restart the recognition (except for aborts)
+        if (e.error !== 'aborted') {
+          recognition.stop();
+          setTimeout(() => recognition.start(), 500);
+        }
+      };
+      
+      recognition.onend = () => {
+        // Auto-restart recognition if it ends but we didn't explicitly stop
+        if ($('recordingIndicator').classList.contains('d-none') === false) {
+          recognition.start();
+        } else {
+          stopTimer();
+        }
+      };
+      
+      recognition.start();
+    }
+
+    function pauseSpeech() {
+      if (recognition) {
+        recognition.stop();
+      }
+      $('recordingIndicator').classList.add('d-none');
+      stopTimer();
+    }
+
+    function stopSpeech() {
+      if (recognition) {
+        recognition.stop();
+      }
+      $('recordingIndicator').classList.add('d-none');
+      stopTimer();
+    }
+
+    function clearTranscript() {
+      $('answerInput').value = '';
+      transcript = '';
+    }
+
+    function playSpeech() {
+      const textToPlay = $('answerInput').value.trim();
+      if (!textToPlay) return alert("No answer available to play.");
+      
+      const utterance = new SpeechSynthesisUtterance(textToPlay);
+      utterance.lang = 'en-US';
+      speechSynthesis.speak(utterance);
+    }
+    
+    function startNewInterview() {
+      // Reset everything
+      currentIndex = 0;
+      allAnswers = [];
+      completedQuestionIds = [];
+      userResponses = {};
+      audioStorage = {};
+      evaluationData = {};
+      cheatIncidentCount = 0;
+      totalOutOfFocusTime = 0;
+      outOfFocusStartTime = null;
+      
+      // Reset UI elements
+      $('focusTimeIndicator').style.display = 'none';
+      
+      // Clear previous results checking interval
+      if (resultsCheckInterval) {
+        clearInterval(resultsCheckInterval);
+        resultsCheckInterval = null;
+      }
+      
+      // Show selection screen again
+      $('resultSummary').classList.add('d-none');
+      $('selectionSection').classList.remove('d-none');
+      $('answersContainer').innerHTML = '';
+      $('answersContainer').classList.add('d-none');
+      $('questionAnalysis').innerHTML = '';
+      
+      // Remove any integrity section
+      if ($('integritySection')) {
+        $('integritySection').remove();
+      }
+    }
+
+    // Make selection section visible on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      $('selectionSection').classList.remove('d-none');
+      updateAvailableQuestions();
+    });
+
+    // In loadQuestionsBtn, set sessionId from response
+    $('loadQuestionsBtn').onclick = async () => {
+      const domain = $('domain').value === 'Automation' ? 'Automation' : $('domain').value;
+      const questionType = $('questionType').value;
+      const count = parseInt($('questionCount').value);
+      const availableCount = parseInt($('availableQuestionCount').textContent);
+      if (count > availableCount) {
+        alert(`Only ${availableCount} questions available. Setting to maximum available.`);
+        $('questionCount').value = availableCount;
+      }
+      const res = await fetch('/api/questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain, questionType, count: Math.min(count, availableCount) })
+      });
+      const data = await res.json();
+      sessionId = data.sessionId;
+      questions = data.questions;
+      currentIndex = 0;
+      allAnswers = [];
+      completedQuestionIds = [];
+      userResponses = {};
+      audioStorage = {};
+      evaluationData = {};
+      cheatIncidentCount = 0;
+      totalOutOfFocusTime = 0;
+      outOfFocusStartTime = null;
+      $('selectionSection').classList.add('d-none');
+      $('resultSummary').classList.add('d-none');
+      $('answersContainer').innerHTML = '';
+      $('answersContainer').classList.add('d-none');
+      $('questionAnalysis').innerHTML = '';
+      $('focusTimeIndicator').style.display = 'none';
+      if ($('integritySection')) {
+        $('integritySection').remove();
+      }
+      showQuestion();
+    };
+
+    function showQuestion() {
+      if (currentIndex >= questions.length) {
+        // Show result summary when all questions are answered
+        showResultSummary();
+        return;
+      }
+      
+      const q = questions[currentIndex];
+      $('questionText').textContent = q.Question;
+      $('answerInput').value = '';
+      transcript = '';
+      $('questionSection').classList.remove('d-none');
+      $('progressText').textContent = `Question ${currentIndex + 1} of ${questions.length}`;
+      $('progressBar').style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
+      
+      // Reset warning display
+      $('cheatWarning').style.display = 'none';
+      
+      // Default to type input mode
+      toggleInputMode('type');
+      
+      // Set up anti-cheating and screen monitoring for this question
+      setupAntiCheating();
+      setupScreenMonitoring();
+    }
+
+    $('submitAnswerBtn').onclick = async () => {
+      const q = questions[currentIndex];
+      const answer = $('answerInput').value.trim();
+      
+      if (!answer) {
+        alert("Please enter or speak your answer first.");
+        return;
+      }
+      
+      // Show loading indicator
+      $('submissionIndicator').style.display = 'block';
+      $('submitAnswerBtn').disabled = true;
+      
+      try {
+        // Add answer to user responses with a unique question ID
+        const questionId = `q_${currentIndex}_${Date.now()}`;
+        completedQuestionIds.push(questionId);
+        
+        userResponses[questionId] = {
+          question: q.Question,
+          answer: answer,
+          questionIndex: currentIndex + 1
+        };
+        
+        // Store answer text for playback
+        audioStorage[questionId] = answer;
+        
+        // Create a placeholder for this question in the evaluation data
+        evaluationData[questionId] = {
+          question: q.Question,
+          answer: answer,
+          questionIndex: currentIndex + 1,
+          pending: true
+        };
+        
+        // If this is the last question, immediately show the summary section
+        if (currentIndex === questions.length - 1) {
+          // Update the last flag
+          const isLastQuestion = true;
+          
+          // Submit answer for background processing
+          await fetch('/api/submit-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              question: q.Question,
+              answer: answer,
+              ideal: q['Ideal Answer'],
+              keywords: q.Keywords,
+              questionId: questionId,
+              sessionId: sessionId,
+              isFinal: isLastQuestion
+            })
+          });
+          
+          // Move to next question/results
+          currentIndex++;
+          
+          // Hide loading indicator
+          $('submissionIndicator').style.display = 'none';
+          $('submitAnswerBtn').disabled = false;
+          
+          // Show results immediately
+          showResultSummary();
+          
+          // Start background checking for evaluation results
+          startResultsCheck();
+        } else {
+          // For non-final questions, submit answer and continue
+          await fetch('/api/submit-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              question: q.Question,
+              answer: answer,
+              ideal: q['Ideal Answer'],
+              keywords: q.Keywords,
+              questionId: questionId,
+              sessionId: sessionId,
+              isFinal: false
+            })
+          });
+          
+          // Move to next question immediately
+          currentIndex++;
+          
+          // Hide loading indicator
+          $('submissionIndicator').style.display = 'none';
+          $('submitAnswerBtn').disabled = false;
+          
+          // Show next question
+          showQuestion();
+          
+          // Start checking for results in the background
+          if (!resultsCheckInterval) {
+            startResultsCheck();
+          }
+        }
+      } catch (error) {
+        console.error("Error submitting answer:", error);
+        alert("Error submitting your answer. Please try again.");
+        $('submissionIndicator').style.display = 'none';
+        $('submitAnswerBtn').disabled = false;
+      }
+    };
+    
+    function startResultsCheck() {
+      // Start an interval to check for evaluation results
+      resultsCheckInterval = setInterval(checkEvaluationResults, 2000);
+    }
+    
+    async function checkEvaluationResults() {
+      try {
+        const response = await fetch('/api/get-results', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: sessionId,
+            questionIds: completedQuestionIds
+          })
+        });
+        
+        const data = await response.json();
+        
+        // Process any new results
+        let updatedAny = false;
+        for (const questionId in data.results) {
+          // Check if this is new or updated data
+          if (!evaluationData[questionId] || evaluationData[questionId].pending) {
+            evaluationData[questionId] = {
+              ...data.results[questionId],
+              pending: false
+            };
+            updatedAny = true;
+            
+            // Update the UI for this question
+            updateQuestionUI(questionId, evaluationData[questionId]);
+          }
+        }
+        
+        // If we updated any data, recalculate averages
+        if (updatedAny) {
+          updateAverages();
+        }
+        
+        // Stop checking if all evaluations are complete
+        if (data.completed) {
+          clearInterval(resultsCheckInterval);
+        }
+      } catch (error) {
+        console.error("Error checking results:", error);
+      }
+    }
+    
+    function updateQuestionUI(questionId, result) {
+      // Find existing question summary if any
+      let summaryDiv = document.getElementById(`summary-${questionId}`);
+      const isNew = !summaryDiv;
+      
+      // Create new div if needed
+      if (isNew) {
+        summaryDiv = document.createElement('div');
+        summaryDiv.className = 'question-summary';
+        summaryDiv.id = `summary-${questionId}`;
+        $('questionAnalysis').appendChild(summaryDiv);
+      }
+      
+      // If evaluation is still pending
+      if (result.pending) {
+        summaryDiv.innerHTML = `
+          <h6>Question ${result.questionIndex}: ${result.question}</h6>
+          <p class="pending-evaluation">
+            <span class="loading-spinner"></span> Evaluation in progress...
+          </p>
+          <button class="btn btn-sm btn-outline-info" onclick="playStoredAnswer('${questionId}')">🔁 Listen to Your Answer</button>
+        `;
+        return;
+      }
+      
+      // Evaluation is complete, show full data
+      const eval = result.evaluation;
+      
+      // Determine score classes
+      const getScoreClass = score => {
+        if (score >= 8) return 'score-high';
+        if (score >= 5) return 'score-medium';
+        return 'score-low';
+      };
+      
+      summaryDiv.innerHTML = `
+        <h6>Question ${result.questionIndex}: ${result.question}
+          <span class="evaluation-status status-completed">Evaluated</span>
+        </h6>
+        <div>
+          <span class="score-pill ${getScoreClass(eval.accuracy)}">Accuracy: ${eval.accuracy}/10</span>
+          <span class="score-pill ${getScoreClass(eval.relevance)}">Relevance: ${eval.relevance}/10</span>
+          <span class="score-pill ${getScoreClass(eval.depth)}">Depth: ${eval.depth}/10</span>
+          <span class="score-pill ${getScoreClass(eval.confidence)}">Confidence: ${eval.confidence}/10</span>
+        </div>
+        <p class="mt-2"><strong>Feedback:</strong> ${eval.detailedFeedback}</p>
+        <p><strong>Strengths:</strong> ${eval.strengths}</p>
+        <p><strong>Areas to Improve:</strong> ${eval.improvements}</p>
+        <button class="btn btn-sm btn-outline-info" onclick="playStoredAnswer('${questionId}')">🔁 Listen to Your Answer</button>
+      `;
+    }
+    
+    function updateAverages() {
+      // Calculate averages from available evaluations
+      let totalAccuracy = 0, totalRelevance = 0, totalDepth = 0, totalConfidence = 0;
+      let count = 0;
+      
+      for (const questionId in evaluationData) {
+        if (!evaluationData[questionId].pending && evaluationData[questionId].evaluation) {
+          const eval = evaluationData[questionId].evaluation;
+          totalAccuracy += eval.accuracy;
+          totalRelevance += eval.relevance;
+          totalDepth += eval.depth;
+          totalConfidence += eval.confidence;
+          count++;
+        }
+      }
+      
+      // Update UI with averages
+      if (count > 0) {
+        $('avgAccuracy').textContent = (totalAccuracy / count).toFixed(1);
+        $('avgRelevance').textContent = (totalRelevance / count).toFixed(1);
+        $('avgDepth').textContent = (totalDepth / count).toFixed(1);
+        $('avgConfidence').textContent = (totalConfidence / count).toFixed(1);
+        
+        // Update overall status
+        const overallScore = (totalAccuracy + totalRelevance + totalDepth + totalConfidence) / (count * 4);
+        updateFinalStatus(overallScore);
+      } else {
+        // No evaluations yet
+        $('avgAccuracy').textContent = "...";
+        $('avgRelevance').textContent = "...";
+        $('avgDepth').textContent = "...";
+        $('avgConfidence').textContent = "...";
+        $('finalStatus').textContent = "Pending";
+        $('finalMessage').textContent = "Evaluations in progress...";
+      }
+    }
+    
+    function updateFinalStatus(overallScore) {
+      if (overallScore >= 8) {
+        $('finalStatus').textContent = 'Excellent';
+        $('finalMessage').textContent = 'You demonstrated strong software testing knowledge and excellent communication skills!';
+      } else if (overallScore >= 6.5) {
+        $('finalStatus').textContent = 'Good';
+        $('finalMessage').textContent = 'You show solid understanding of software testing principles with room for minor improvements.';
+      } else if (overallScore >= 5) {
+        $('finalStatus').textContent = 'Average';
+        $('finalMessage').textContent = 'You have a basic grasp of software testing concepts. Focus on deepening your knowledge.';
+      } else {
+        $('finalStatus').textContent = 'Needs Improvement';
+        $('finalMessage').textContent = 'Continue practicing and studying software testing fundamentals to improve your interview performance.';
+      }
+    }
+
+    // Function to play a stored answer
+    function playStoredAnswer(questionId) {
+      const answerText = audioStorage[questionId];
+      if (!answerText) return alert("Answer not available for playback.");
+      
+      const utterance = new SpeechSynthesisUtterance(answerText);
+      utterance.lang = 'en-US';
+      speechSynthesis.speak(utterance);
+    }
+
+    function showResultSummary() {
+      $('questionSection').classList.add('d-none');
+      $('resultSummary').classList.remove('d-none');
+      
+      // Add placeholder summaries for each question submitted
+      for (const questionId in userResponses) {
+        const response = userResponses[questionId];
+        
+        // Create placeholder in evaluation data if not exists
+        if (!evaluationData[questionId]) {
+          evaluationData[questionId] = {
+            question: response.question,
+            answer: response.answer,
+            questionIndex: response.questionIndex,
+            pending: true
+          };
+        }
+        
+        // Add placeholder UI
+        updateQuestionUI(questionId, evaluationData[questionId]);
+      }
+      
+      // Initialize averages with placeholders
+      updateAverages();
+      
+      // Add cheating incidents and focus data to the report
+      fetchAndDisplayCheatingData();
+      fetchAndDisplayFocusData();
+    }
+
+    function fetchAndDisplayCheatingData() {
+      if (!sessionId) return;
+      
+      fetch('/api/get-incidents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: sessionId })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const incidents = data.incidents || [];
+        
+        // Create a section for incidents if there are any
+        if (incidents.length > 0) {
+          // Create container if it doesn't exist
+          if (!$('integritySection')) {
+            const integritySection = document.createElement('div');
+            integritySection.id = 'integritySection';
+            integritySection.className = 'mt-4';
+            integritySection.innerHTML = `<h5>🔒 Interview Integrity Report</h5>`;
+            $('finalMessage').parentNode.after(integritySection);
+          }
+          
+          // Create incidents report
+          const incidentsDiv = document.createElement('div');
+          incidentsDiv.className = 'alert alert-danger';
+          incidentsDiv.innerHTML = `
+            <p><strong>⚠️ ${incidents.length} potential integrity violations detected:</strong></p>
+            <ul>
+              ${incidents.map(inc => `<li>Question ${inc.questionIndex + 1}: ${inc.type === 'copy' ? 'Attempted to copy question' : 'Attempted to paste text'}</li>`).join('')}
+            </ul>
+          `;
+          
+          $('integritySection').appendChild(incidentsDiv);
+        }
+      })
+      .catch(err => console.error('Failed to fetch incidents:', err));
+    }
+
+    function fetchAndDisplayFocusData() {
+      if (!sessionId) return;
+      
+      fetch('/api/get-focus-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: sessionId })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success' && data.outOfFocusTime > 0) {
+          // Create integrity section if it doesn't exist
+          if (!$('integritySection')) {
+            const integritySection = document.createElement('div');
+            integritySection.id = 'integritySection';
+            integritySection.className = 'mt-4';
+            integritySection.innerHTML = `<h5>🔒 Interview Integrity Report</h5>`;
+            $('finalMessage').parentNode.after(integritySection);
+          }
+          
+          // Format time
+          const minutes = Math.floor(data.outOfFocusTime / 60);
+          const seconds = Math.floor(data.outOfFocusTime % 60);
+          
+          // Create focus report
+          const focusDiv = document.createElement('div');
+          focusDiv.className = 'alert alert-warning';
+          focusDiv.innerHTML = `
+            <p><strong>⏱️ Screen focus lost during interview</strong></p>
+            <p>Total time spent outside interview window: <strong>${minutes} minutes, ${seconds} seconds</strong></p>
+            <p class="mb-0">Excessive time away from the interview may affect your evaluation.</p>
+          `;
+          
+          $('integritySection').appendChild(focusDiv);
+        }
+      })
+      .catch(err => console.error('Failed to fetch focus data:', err));
+    }
+
+    function exportCSV() {
+      let csvContent = "Question,Your Answer,Accuracy,Relevance,Depth,Confidence,Feedback\n";
+      
+      for (const questionId in evaluationData) {
+        const result = evaluationData[questionId];
+        
+        // Skip pending evaluations
+        if (result.pending) continue;
+        
+        const eval = result.evaluation;
+        
+        // Format CSV row (account for commas in content)
+        const formatCSV = text => `"${text.replace(/"/g, '""')}"`;
+        
+        csvContent += [
+          formatCSV(result.question),
+          formatCSV(result.answer),
+          eval.accuracy,
+          eval.relevance,
+          eval.depth,
+          eval.confidence,
+          formatCSV(eval.detailedFeedback)
+        ].join(',') + '\n';
+      }
+      
+      
+      // Create and trigger download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'interview_results.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
