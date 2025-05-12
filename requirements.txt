@@ -6,6 +6,8 @@ requests
 sentence-transformers 
 numpy 
 scikit-learn
+python-dotenv
+
 
 
 
