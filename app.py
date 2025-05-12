@@ -22,7 +22,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Initialize the sentence transformer model for embeddings
-model = SentenceTransformer('all-MiniLM-L3-v2')
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # File to store embeddings
 EMBEDDINGS_FILE = 'embeddings.pkl'
