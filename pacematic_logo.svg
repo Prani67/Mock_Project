@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stylized P logo with concentric curves -->
+  <path d="M80,40 C120,40 140,60 140,90 C140,120 120,140 80,140" stroke="#0046AD" stroke-width="8" fill="none"/>
+  <path d="M80,60 C110,60 120,70 120,90 C120,110 110,120 80,120" stroke="#0046AD" stroke-width="8" fill="none"/>
+  <path d="M80,80 C100,80 100,80 100,90 C100,100 100,100 80,100" stroke="#0046AD" stroke-width="8" fill="none"/>
+  <line x1="80" y1="40" x2="80" y2="160" stroke="#0046AD" stroke-width="8"/>
+  
+  <!-- Pacematic text -->
+  <text x="160" y="100" font-family="Times New Roman, serif" font-size="42" font-weight="bold" fill="#0046AD">Pacematic</text>
+  
+  <!-- Corporate Training Centre text -->
+  <text x="160" y="125" font-family="Arial, sans-serif" font-size="16" fill="#0046AD">Corporate Training Centre</text>
+  
+  <!-- Tagline -->
+  <text x="160" y="150" font-family="Arial, sans-serif" font-size="12" fill="#0046AD">Atleast 1 Member From A Family Should Have A Job</text>
+  
+  <!-- Underline -->
+  <line x1="160" y1="130" x2="390" y2="130" stroke="#0046AD" stroke-width="1"/>
+</svg>
